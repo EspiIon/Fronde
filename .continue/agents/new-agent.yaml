@@ -1,0 +1,21 @@
+name: Codestral
+version: 1.0.0
+schema: v1
+models:
+  - name: Codestral
+    provider: mistral
+    model: codestral-latest
+    apiKey: xjwZthBnUNH492a2NcY7i4kd3VCod4lw
+    roles:
+      - autocomplete
+      - chat
+      - edit
+      - apply
+context:
+  - provider: code
+  - provider: docs
+  - provider: diff
+  - provider: terminal
+  - provider: problems
+  - provider: folder
+  - provider: codebase

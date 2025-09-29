@@ -5,7 +5,7 @@ uses SDL2;//on utilise la librairie SDL2
 
 type coord = 
     record
-    x,y:integer;
+    x,y:real;
     end;
 
 type Tcurvepoint = 
@@ -21,16 +21,23 @@ type Ttrajectory =
     powerx,powery,velocity:integer;
     curvepoints:tabRenduPosition;
     dragging:boolean;
+    g:real;
     end;
 
+type Tprojectile =
+    record
+    destRect:TSDL_Rect;//rectangle de destination
+    texture:PSDL_Texture;
+    actif,Throw:boolean;
+    pos,vitesse:coord;
+    t:real;
+    end;
 
 //type background
 type Tbackground =
     record
     destRect:TSDL_Rect;//rectangle de destination
-    surface:PSDL_Surface;//surface
     texture:PSDL_Texture;//texture
-    x:real;
     end;
     
 implementation

@@ -5,16 +5,16 @@ interface
 uses SDL2, SDL2_image,SDL2_gfx,structure,SysUtils;
 
 procedure affichageTrajectory(var sdlRenderer:PSDL_Renderer;trajectory:Ttrajectory);
+procedure affichageProjectile(var sdlRenderer:PSDL_Renderer;projectile:Tprojectile);
+procedure affichageBackground(var sdlRenderer:PSDL_Renderer;background:Tbackground);
 
 implementation
 
 procedure affichageTrajectory(var sdlRenderer:PSDL_Renderer;trajectory:Ttrajectory);
 var i:integer;
-    cross:TSDL_Rect;
 begin
 if trajectory.dragging then
     begin
-        writeln('dessin!');
         // cross.x:=trajectory.POS0.x;
         // cross.y:=trajectory.POS0.y;
         // cross.w:=100;
@@ -27,8 +27,19 @@ if trajectory.dragging then
                     trajectory.curvepoints[i].destRect.h:=10;
                     SDL_SetRenderDrawColor(sdlRenderer, 255, 255, 255, 255);
                     SDL_RenderFillRect(sdlRenderer, @trajectory.curvepoints[i].destRect );
-                    writeln('i: ',i,' ',trajectory.curvepoints[i].destRect.h);
                 end;
         end;
     end;
+
+procedure affichageProjectile(var sdlRenderer:PSDL_Renderer;projectile:Tprojectile);
+begin
+    if projectile.actif then
+    begin
+    SDL_RenderCopy(sdlRenderer, projectile.texture, nil, @projectile.destRect);
+    end;
+end;
+procedure affichageBackground(var sdlRenderer:PSDL_Renderer;background:Tbackground);
+begin
+    SDL_RenderCopy(sdlRenderer, background.texture, nil, @background.destRect)
+end;
 end.
