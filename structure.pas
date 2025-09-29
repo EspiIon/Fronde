@@ -29,9 +29,19 @@ type Tprojectile =
     destRect:TSDL_Rect;//rectangle de destination
     texture:PSDL_Texture;
     actif,Throw:boolean;
-    pos,vitesse:coord;
+    pos,velocity:coord;
     t:real;
     end;
+type TStructure =
+    record
+    destRect:TSDL_Rect;
+    actif:boolean;
+    texture:PSDL_Texture;
+    count:integer;
+end;
+
+type TabStructure = array[1..20] of array[1..20] of TStructure;
+
 
 //type background
 type Tbackground =

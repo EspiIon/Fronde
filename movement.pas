@@ -7,6 +7,8 @@ uses SDL2, SDL2_image,structure,SysUtils,interaction;
 procedure CalculOfTrajectory(var trajectory:Ttrajectory);
 procedure power(var trajectory:Ttrajectory);
 procedure MouvementProjectile(var trajectory:Ttrajectory;var projectile:Tprojectile);
+procedure Velocity(var trajectory:Ttrajectory;var projectile:Tprojectile);
+
 implementation
 
 procedure CalculOfTrajectory(var trajectory:Ttrajectory);
@@ -24,13 +26,21 @@ begin
         end;
 end;
 
+procedure Velocity(var trajectory:Ttrajectory;var projectile:Tprojectile);
+begin
+    if projectile.Throw then
+        begin
+            projectile.velocity.y:=projectile.velocity.y + trajectory.g*projectile.t;
+        end;
+end;
 procedure MouvementProjectile(var trajectory:Ttrajectory;var projectile:Tprojectile);
 begin
     if projectile.Throw then
         begin
-            projectile.pos.x:=-trajectory.powerx*projectile.t+100;
-            projectile.pos.y:=-trajectory.powery*projectile.t+(1/2)*trajectory.g*projectile.t*projectile.t + 600;
-            projectile.t:=projectile.t+0.16;
+            projectile.pos.x:=projectile.pos.x + projectile.velocity.x*projectile.t;
+            projectile.pos.y:=projectile.pos.y + projectile.velocity.y*projectile.t;
+
+            projectile.t:=0.16;
             projectile.destRect.x:=round(projectile.pos.x);
             projectile.destRect.y:=round(projectile.pos.y);
         end;

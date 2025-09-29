@@ -1,7 +1,7 @@
 program main;
 
 
-uses SDL2, SDL2_image,sysutils,affichage,interaction,movement,structure,load;
+uses SDL2, SDL2_image,sysutils,affichage,interaction,movement,structure,load,hitbox;
 
 var sdlWindow1:PSDL_Window;//fenetre
     sdlRenderer:PSDL_Renderer;//rendu
@@ -10,8 +10,9 @@ var sdlWindow1:PSDL_Window;//fenetre
     trajectory:Ttrajectory;
     projectile:Tprojectile;
     background:Tbackground;
-
+    construction:TabStructure;
 begin
+
 sdlWindow1 := SDL_CreateWindow('Fenêtre SDL2',
                               SDL_WINDOWPOS_CENTERED,
                               SDL_WINDOWPOS_CENTERED,
@@ -21,7 +22,7 @@ sdlWindow1 := SDL_CreateWindow('Fenêtre SDL2',
 sdlRenderer:= SDL_CreateRenderer(sdlWindow1, -1, SDL_RENDERER_ACCELERATED);
 enCours := True;
 chargementSetting(projectile,trajectory,background,sdlRenderer);
-
+InitStructure(construction,sdlRenderer);
 while enCours do
   begin
     // Gestion de la fermeture de la fenêtre
@@ -65,19 +66,28 @@ while enCours do
     if not projectile.Throw then
       begin
         projectile.t:=0;
+        projectile.velocity.x:=-trajectory.powerx;
+        projectile.velocity.y:=-trajectory.powery;
         projectile.pos.x:=100;
         projectile.pos.y:=600;
         projectile.destRect.x:=round(projectile.pos.x);
         projectile.destRect.y:=round(projectile.pos.y);
       end;
-    
+
+
+    Velocity(trajectory,projectile);
     MouvementProjectile(trajectory,projectile);
     CalculOfTrajectory(trajectory);
+    collisionConstruction(construction,projectile);
+    updatecounter(construction);
+    cascadeConstruction(construction);
+
+    
     //affichage
     affichageBackground(sdlRenderer,background);
     affichageTrajectory(sdlRenderer,trajectory);
     affichageProjectile(sdlRenderer,projectile);
-    
+    affichageStructure(sdlRenderer,construction);
 
     SDL_SetRenderDrawColor(sdlRenderer, 0, 0, 0, 255);
     SDL_RenderPresent(sdlRenderer);
@@ -89,3 +99,4 @@ while enCours do
     SDL_Quit; 
 end.
     
+

@@ -7,6 +7,7 @@ uses SDL2, SDL2_image,SDL2_gfx,structure,SysUtils;
 procedure affichageTrajectory(var sdlRenderer:PSDL_Renderer;trajectory:Ttrajectory);
 procedure affichageProjectile(var sdlRenderer:PSDL_Renderer;projectile:Tprojectile);
 procedure affichageBackground(var sdlRenderer:PSDL_Renderer;background:Tbackground);
+procedure affichageStructure(var sdlRenderer:PSDL_Renderer;structure:TabStructure);
 
 implementation
 
@@ -42,4 +43,21 @@ procedure affichageBackground(var sdlRenderer:PSDL_Renderer;background:Tbackgrou
 begin
     SDL_RenderCopy(sdlRenderer, background.texture, nil, @background.destRect)
 end;
+
+procedure affichageStructure(var sdlRenderer:PSDL_Renderer;structure:TabStructure);
+var
+  i, j: Integer;
+begin
+    for i := 1 to 20 do
+        begin
+            for j := 1 to 20 do
+            begin
+                if structure[i, j].actif then
+                    begin
+                        SDL_RenderCopy(sdlRenderer, structure[i, j].texture, nil, @structure[i, j].destRect);
+                    end;
+            end;
+        end;
+end;
+
 end.
