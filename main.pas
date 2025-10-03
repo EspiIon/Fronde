@@ -3,6 +3,8 @@ program main;
 
 uses SDL2, SDL2_image,sysutils,affichage,interaction,movement,structure,load,hitbox;
 
+
+//variable utilisé
 var sdlWindow1:PSDL_Window;//fenetre
     sdlRenderer:PSDL_Renderer;//rendu
     enCours:boolean;
@@ -11,6 +13,8 @@ var sdlWindow1:PSDL_Window;//fenetre
     projectile:Tprojectile;
     background:Tbackground;
     construction:TabStructure;
+
+
 begin
 
 sdlWindow1 := SDL_CreateWindow('Fenêtre SDL2',
@@ -23,29 +27,31 @@ sdlRenderer:= SDL_CreateRenderer(sdlWindow1, -1, SDL_RENDERER_ACCELERATED);
 enCours := True;
 chargementSetting(projectile,trajectory,background,sdlRenderer);
 InitStructure(construction,sdlRenderer);
-while enCours do
+
+
+while enCours do//boucle de jeu
   begin
     // Gestion de la fermeture de la fenêtre
-    while SDL_PollEvent(@event) <> 0 do
+    while SDL_PollEvent(@event) <> 0 do //evenement (souris clavier)
         begin
           case event.type_ of
 
             SDL_MOUSEBUTTONDOWN:
-            if event.button.button = SDL_BUTTON_LEFT then
+            if event.button.button = SDL_BUTTON_LEFT then //au clique gauche
                 begin
-                    projectile.Throw:=False;
+                    projectile.Throw:=False; //projetile en position de depart
                     trajectory.dragging:=True;
-                    trajectory.POS0.x:=event.button.x;
+                    trajectory.POS0.x:=event.button.x;//position de la souris recuperé
                     trajectory.POS0.y:=event.button.y;
                 end;
 
             SDL_MOUSEBUTTONUP:
-            if event.button.button = SDL_BUTTON_LEFT then
+            if event.button.button = SDL_BUTTON_LEFT then //clique gauche relaché
                 begin
                 trajectory.dragging:=False;
                 projectile.Throw:=True;
                 end;
-            SDL_MOUSEMOTION:
+            SDL_MOUSEMOTION: //mouvement de la souris
               begin
                 // Récupération des coordonnées de la souris
                 trajectory.POS.x:= event.motion.x;

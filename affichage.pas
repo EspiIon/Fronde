@@ -14,20 +14,14 @@ implementation
 procedure affichageTrajectory(var sdlRenderer:PSDL_Renderer;trajectory:Ttrajectory);
 var i:integer;
 begin
-if trajectory.dragging then
+if trajectory.dragging then //si on appuye sur le clic de la souris
     begin
-        // cross.x:=trajectory.POS0.x;
-        // cross.y:=trajectory.POS0.y;
-        // cross.w:=100;
-        // cross.h:=100;
-        // SDL_SetRenderDrawColor(sdlRenderer, 0, 0, 55, 255);
-        // SDL_RenderFillRect(sdlRenderer, @cross);
         for i:=1 to 10 do
                 begin
-                    trajectory.curvepoints[i].destRect.w:=10;
+                    trajectory.curvepoints[i].destRect.w:=10;//taille des points
                     trajectory.curvepoints[i].destRect.h:=10;
                     SDL_SetRenderDrawColor(sdlRenderer, 255, 255, 255, 255);
-                    SDL_RenderFillRect(sdlRenderer, @trajectory.curvepoints[i].destRect );
+                    SDL_RenderFillRect(sdlRenderer, @trajectory.curvepoints[i].destRect );//dessine les points
                 end;
         end;
     end;
@@ -52,7 +46,7 @@ begin
         begin
             for j := 1 to 20 do
             begin
-                if structure[i, j].actif then
+                if structure[i, j].actif then//si la structure est active on l'affiche
                     begin
                         SDL_RenderCopy(sdlRenderer, structure[i, j].texture, nil, @structure[i, j].destRect);
                     end;

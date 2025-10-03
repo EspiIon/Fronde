@@ -30,8 +30,8 @@ begin
     background.destRect.w:=1800;
     background.destRect.h:=800;
     
-    surface := IMG_Load('./assets/background.png');
-    background.texture := SDL_CreateTextureFromSurface(sdlRenderer, surface);
+    surface := IMG_Load('./assets/background.png'); //on charge l'image dans une surface
+    background.texture := SDL_CreateTextureFromSurface(sdlRenderer, surface); //on la transforme en texture
     end;
 
 procedure InitStructure(var construction:TabStructure; var sdlRenderer:PSDL_RENDERER);
@@ -42,7 +42,7 @@ begin
         begin
             for j:=1 to 20 do
                 begin
-                    construction[i][j].destRect.w:=50;
+                    construction[i][j].destRect.w:=50; //dimensions et position
                     construction[i][j].destRect.h:=50;
                     construction[i][j].destRect.x:=1000 + i*50;
                     construction[i][j].destRect.y:=800-j*50;
