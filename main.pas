@@ -1,3 +1,4 @@
+
 program main;
 
 
@@ -6,6 +7,7 @@ uses SDL2, SDL2_image,sysutils,affichage,interaction,movement,structure,load,hit
 var sdlWindow1:PSDL_Window;//fenetre
     sdlRenderer:PSDL_Renderer;//rendu
     enCours:boolean;
+    bJouer, bQuitter, bRetour, bNv1, bNv2, bNv3 : TBouton ;
     event: TSDL_Event;
     trajectory:Ttrajectory;
     projectile:Tprojectile;
@@ -22,8 +24,39 @@ sdlWindow1 := SDL_CreateWindow('Fenêtre SDL2',
 sdlRenderer:= SDL_CreateRenderer(sdlWindow1, -1, SDL_RENDERER_ACCELERATED);
 enCours := True;
 chargementSetting(projectile,trajectory,background,sdlRenderer);
+chargementniveau(construction);
 InitStructure(construction,sdlRenderer);
+
+
+//Menu()
+// bQuitter.actif := false ;
+// initialisation(sdlRenderer, bJouer, bQuitter, fond);
+// while not bQuitter.actif do 
+// 	begin 
+// 		affiche_debut(sdlRenderer,fond, bJouer, bQuitter);
+// 		mouseEvents(bJouer, bQuitter, bRetour, bNv1, bNv2, bNv3);
+// 		if bJouer.actif then
+// 			affiche_niveau(sdlRenderer,bNv1,bNv2,bNv3,bRetour,fond);
+		
+// 	end;
+	
+// //ChargerNiveau()
+// while bJouer.actif do
+// 	begin
+// 		if bNv1.actif then
+// 			{charger niveau 1}
+// 		if bNv2.actif then
+// 			{charger niveau 2}
+// 		if bNv3.actif then
+// 			{charger niveau 3}
+// 	end;
+		
+
+
+
+
 while enCours do
+
   begin
     // Gestion de la fermeture de la fenêtre
     while SDL_PollEvent(@event) <> 0 do
@@ -55,40 +88,29 @@ while enCours do
               enCours := False;
          end;
       end;
-    
+    projectile.falling:=True;
     // Effacer l'écran en noir
-    
-    
-    if projectile.pos.y>800 then
-      begin
-        projectile.Throw:=False;
-      end;
-    if not projectile.Throw then
-      begin
-        projectile.t:=0;
-        projectile.velocity.x:=-trajectory.powerx;
-        projectile.velocity.y:=-trajectory.powery;
-        projectile.pos.x:=100;
-        projectile.pos.y:=600;
-        projectile.destRect.x:=round(projectile.pos.x);
-        projectile.destRect.y:=round(projectile.pos.y);
-      end;
+    CalculOfTrajectory(trajectory,projectile);
+	  ProjectileValide(projectile,trajectory);    
+    destructionStructure(construction);
+    ConstructionFalling(construction);
 
 
     Velocity(trajectory,projectile);
-    MouvementProjectile(trajectory,projectile);
-    CalculOfTrajectory(trajectory);
+    velocityConstructions(construction);
     collisionConstruction(construction,projectile);
-    updatecounter(construction);
-    cascadeConstruction(construction);
-
+    hitboxStructure(construction);
+    
+    MouvementProjectile(trajectory,projectile);
+	  MovementConstructions(construction);
     
     //affichage
     affichageBackground(sdlRenderer,background);
     affichageTrajectory(sdlRenderer,trajectory);
     affichageProjectile(sdlRenderer,projectile);
     affichageStructure(sdlRenderer,construction);
-
+	
+	//sdl render
     SDL_SetRenderDrawColor(sdlRenderer, 0, 0, 0, 255);
     SDL_RenderPresent(sdlRenderer);
     sdl_delay(16);
