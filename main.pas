@@ -88,33 +88,34 @@ while enCours do
               enCours := False;
          end;
       end;
-    projectile.falling:=True;
-    // Effacer l'écran en noir
-    CalculOfTrajectory(trajectory,projectile);
-	  ProjectileValide(projectile,trajectory);    
-    destructionStructure(construction);
-    ConstructionFalling(construction);
+      projectile.falling:=True;
+      projectile.colliding:=False;
+      // Effacer l'écran en noir
+      CalculOfTrajectory(trajectory,projectile);
+      ProjectileValide(projectile,trajectory);    
+      
+      Velocity(trajectory,projectile);
+      velocityConstructions(construction);
+      ConstructionFalling(construction);
+      MouvementProjectile(trajectory,projectile);
+      MovementConstructions(construction);
 
-
-    Velocity(trajectory,projectile);
-    velocityConstructions(construction);
-    collisionConstruction(construction,projectile);
-    hitboxStructure(construction);
-    
-    MouvementProjectile(trajectory,projectile);
-	  MovementConstructions(construction);
-    
-    //affichage
-    affichageBackground(sdlRenderer,background);
-    affichageTrajectory(sdlRenderer,trajectory);
-    affichageProjectile(sdlRenderer,projectile);
-    affichageStructure(sdlRenderer,construction);
+      collisionConstruction(construction,projectile);
+      hitboxStructure(construction);
+      
+      destructionStructure(construction);
+      
+      //affichage
+      affichageBackground(sdlRenderer,background);
+      affichageTrajectory(sdlRenderer,trajectory);
+      affichageProjectile(sdlRenderer,projectile);
+      affichageStructure(sdlRenderer,construction);
 	
 	//sdl render
-    SDL_SetRenderDrawColor(sdlRenderer, 0, 0, 0, 255);
-    SDL_RenderPresent(sdlRenderer);
-    sdl_delay(16);
-    SDL_RenderClear(sdlRenderer);
+      SDL_SetRenderDrawColor(sdlRenderer, 0, 0, 0, 255);
+      SDL_RenderPresent(sdlRenderer);
+      sdl_delay(16);
+      SDL_RenderClear(sdlRenderer);
   end;
     SDL_DestroyRenderer(sdlRenderer);
     SDL_DestroyWindow(sdlWindow1);

@@ -22,7 +22,7 @@ begin
         begin
             for j:=1 to MAX_Y do
                 begin
-                    if (construction[i][j].actif) and (not projectile.colliding) then
+                    if (construction[i][j].actif) then
                         begin
                             bottom.x:=projectile.destRect.x+4;
                             bottom.y:=projectile.destRect.y+projectile.destRect.h-2;
@@ -73,31 +73,35 @@ for i:=1 to MAX_X do
                                             bottom.x:=construction[i][j].destRect.x;
                                             bottom.y:=construction[i][j].destRect.y+construction[i][j].destRect.h;
                                             bottom.w:=construction[i][j].destRect.w;
-                                            bottom.h:=1;
+                                            bottom.h:=2;
                                             
                                             left.x:=construction[i][j].destRect.x;
                                             left.y:=construction[i][j].destRect.y;
-                                            left.w:=1;
+                                            left.w:=2;
                                             left.h:=construction[i][j].destRect.h;
 
                                             right.x:=construction[i][j].destRect.x+construction[i][j].destRect.w;
                                             right.y:=construction[i][j].destRect.y;
-                                            right.w:=1;
+                                            right.w:=2;
                                             right.h:=construction[i][j].destRect.h;
+                                            
+                                            // if SDL_HasIntersection(@construction[i][j].destRect,@construction[k][l].destRect) then
+                                            //     begin
+                                            //             collisionStructure_Structure(construction[i][j],construction[k][l]);
+                                            //     end;
 
                                             if SDL_HasIntersection(@bottom,@construction[k][l].destRect) then
                                                 begin  
                                                     construction[i][j].falling:=False;
                                                     if construction[i][j].components.velocity.y>0 then
 														collisionStructure_Structure(construction[i][j],construction[k][l]);
-                                                        
                                                 end;
-                                                
                                             if SDL_HasIntersection(@right,@construction[k][l].destRect) then
                                                 begin
 													if construction[i][j].components.velocity.x>0 then
 														collisionStructure_Structure(construction[i][j],construction[k][l]);
                                                 end;
+
                                             if SDL_HasIntersection(@left,@construction[k][l].destRect) then
                                                 begin
 													if construction[i][j].components.velocity.x<0 then
@@ -123,7 +127,7 @@ for i:= 1 to MAX_X do
 		for j:= 2 to MAX_Y do
 			begin
 				if construction[i][j].life <=0 then
-					construction[i][j].actif:= False;
+                    writeln('destruction');
 			end;
 	end;
 	
@@ -138,7 +142,6 @@ begin
                 begin
                     if construction[i][j].count>0 then
                         begin
-                            writeln(construction[i][j].count);
                             construction[i][j].count:=construction[i][j].count-1;
                         end;
                 end;

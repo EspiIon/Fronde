@@ -51,7 +51,7 @@ procedure velocityConstructions(var construction:TabStructure);
 var i,j,g:integer;
 	lambda:real;
 begin
-g:=9;
+g:=16;
 lambda:=0.3;
 for i:=1 to MAX_X do
     begin

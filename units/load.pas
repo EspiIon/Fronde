@@ -63,7 +63,7 @@ begin
                     if construction[i][j].id =0 then
 						begin
 							surface := IMG_Load('./assets/terre.png');
-							construction[i][j].life:=10000;
+							construction[i][j].life:=250;
 						end
 					else
 						begin
