@@ -57,9 +57,12 @@ for i:=1 to MAX_X do
     begin
         for j:=2 to MAX_Y do
             begin
-                if construction[i][j].actif and  construction[i][j].falling then
+                if construction[i][j].actif  then
                     begin
-                        construction[i][j].components.velocity.y:= construction[i][j].components.velocity.y + g*0.16;
+                        if construction[i][j].falling then
+                            construction[i][j].components.velocity.y:= construction[i][j].components.velocity.y + g*0.16
+                        else
+                            construction[i][j].components.velocity.y:=0;
                     end;
                 construction[i][j].components.velocity.x:= construction[i][j].components.velocity.x - construction[i][j].components.velocity.x*lambda*0.16;
             end;

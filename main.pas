@@ -93,17 +93,22 @@ while enCours do
       // Effacer l'écran en noir
       CalculOfTrajectory(trajectory,projectile);
       ProjectileValide(projectile,trajectory);    
+      destructionStructure(construction);
+      
       
       Velocity(trajectory,projectile);
       velocityConstructions(construction);
       ConstructionFalling(construction);
+
+      
+
       MouvementProjectile(trajectory,projectile);
       MovementConstructions(construction);
 
       collisionConstruction(construction,projectile);
       hitboxStructure(construction);
       
-      destructionStructure(construction);
+      
       
       //affichage
       affichageBackground(sdlRenderer,background);

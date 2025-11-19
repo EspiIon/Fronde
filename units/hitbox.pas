@@ -22,7 +22,7 @@ begin
         begin
             for j:=1 to MAX_Y do
                 begin
-                    if (construction[i][j].actif) then
+                    if (construction[i][j].actif) and (not projectile.colliding) then
                         begin
                             bottom.x:=projectile.destRect.x+4;
                             bottom.y:=projectile.destRect.y+projectile.destRect.h-2;
@@ -41,6 +41,8 @@ begin
 
                             if SDL_HasIntersection(@projectile.destRect,@construction[i][j].destRect) then
                                 begin
+                                    if Overlap(projectile.destRect, construction[i][j].destRect, ox, oy) then
+		                                Resolve(projectile.destrect, construction[i][j].destRect,projectile.components,ox, oy);
                                         projectile.colliding:=True;
                                         collisionProjectile_Structure(projectile,construction[i][j]);
                                 end;
@@ -85,16 +87,18 @@ for i:=1 to MAX_X do
                                             right.w:=2;
                                             right.h:=construction[i][j].destRect.h;
                                             
+                                            
                                             // if SDL_HasIntersection(@construction[i][j].destRect,@construction[k][l].destRect) then
                                             //     begin
                                             //             collisionStructure_Structure(construction[i][j],construction[k][l]);
                                             //     end;
-
+                                            
                                             if SDL_HasIntersection(@bottom,@construction[k][l].destRect) then
                                                 begin  
                                                     construction[i][j].falling:=False;
                                                     if construction[i][j].components.velocity.y>0 then
 														collisionStructure_Structure(construction[i][j],construction[k][l]);
+                                                        
                                                 end;
                                             if SDL_HasIntersection(@right,@construction[k][l].destRect) then
                                                 begin

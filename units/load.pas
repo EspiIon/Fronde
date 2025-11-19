@@ -17,14 +17,14 @@ procedure chargementSetting(var projectile:Tprojectile;var trajectory:Ttrajector
 var surface:PSDL_Surface;
 begin
     //chargement des textures
-    surface := IMG_Load('./assets/projectile.png');
+    surface := IMG_Load('./assets/terre.png');
     projectile.texture := SDL_CreateTextureFromSurface(sdlRenderer, surface);
     SDL_FreeSurface(surface);
 
 
     //taille
-    projectile.destRect.w:=20;
-    projectile.destRect.h:=20;
+    projectile.destRect.w:=40;
+    projectile.destRect.h:=40;
     projectile.destRect.x:=100;
     projectile.t:=0.16;
     projectile.destRect.y:=600;

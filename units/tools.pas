@@ -28,7 +28,7 @@ end;
 
 procedure absorbtionCollision(var components1,components2:Tcomponents);
 var components1_temp:Tcomponents;
-CONST e=0.7;
+CONST e=0.4;
 begin
 	if components2.masse>500 then
 		begin
@@ -38,7 +38,10 @@ begin
 	else if components2.masse= components1.masse then
 		begin
 			components1_temp:=components1;
-			components1:=components2;
+			components1.velocity.x:=e*components2.velocity.x;
+			components1.velocity.y:=e*components2.velocity.y;
+			components2.velocity.x:=e*components1_temp.velocity.x;
+			components2.velocity.y:=e*components1_temp.velocity.y;
 		end
 	else
 		begin
@@ -56,8 +59,8 @@ end;
 //SAT (Separating Axis Theorem)
 function Overlap(A, B: TSDL_Rect; var ox, oy: Integer):Boolean;
 begin
-  ox := Min(A.x + A.w+1, B.x + B.w) - Max(A.x, B.x);
-  oy := Min(A.y + A.h+1, B.y + B.h) - Max(A.y, B.y);
+  ox := Min(A.x + A.w, B.x + B.w) - Max(A.x, B.x);
+  oy := Min(A.y + A.h, B.y + B.h) - Max(A.y, B.y);
   Overlap := (ox > 0) and (oy > 0);
 end;
 
@@ -70,7 +73,6 @@ begin
       A.x:=A.x-ox
     else
       A.x :=A.x+ox;
-
   end
   else
   begin
